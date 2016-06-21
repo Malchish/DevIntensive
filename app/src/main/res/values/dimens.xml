@@ -2,4 +2,49 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Sizes -->
+    
+    <dimen name="size_small_24">24dp</dimen>
+    <dimen name="size_medium_56">56dp</dimen>
+    <dimen name="size_large">72dp</dimen>
+
+    <!--Spaces -->
+
+    <dimen name="status_bar_24">24dp</dimen>
+    <dimen name="tool_bar_56">56dp</dimen>
+    <dimen name="subtitles_48">48dp</dimen>
+    <dimen name="title_and_list_item_72">72dp</dimen>
+    <dimen name="space_between_content_areas_8">8dp</dimen>
+    <dimen name="right_side_icons_align_32">32dp</dimen>
+
+    <!--Margins (phone)-->
+
+    <dimen name="screen_edge_left_and_right_margins_16">16dp</dimen>
+    <dimen name="content_associated_with_an_icon_or_avatar_left_margin_72">72dp</dimen>
+    <dimen name="horizontal_margins_on_mobile_16">16dp</dimen>
+    <dimen name="content_left_margin_from_screen_edge_72">72dp</dimen>
+    <dimen name="account_menu_and_list_items_48">48dp</dimen>
+    <dimen name="navigation_right_margin_56">56dp</dimen>
+
+    <!--Margins (tablet)-->
+
+    <dimen name="screen_edge_left_and_right_margins_24">24dp</dimen>
+    <dimen name="content_left_margin_from_screen_edge_80">80dp</dimen>
+    <dimen name="card_left_and_right_padding_24">24dp</dimen>
+    <dimen name="card_content_left_padding_104">104dp</dimen>
+
+    <dimen name="status_bar_and_space_above_lis_24">24dp</dimen>
+    <dimen name="list_item_64">64dp</dimen>
+    <dimen name="list_item_72">72dp</dimen>
+
+    <dimen name="icons_vertical_center_distance_from_screen_edge_52">52dp</dimen>
+    <dimen name="nav_item_left_padding_from_screen_edge_104">104dp</dimen>
+    <dimen name="card_left_and_right_padding_32">32dp</dimen>
+    <dimen name="card_nav_item_left_padding_96">96dp</dimen>
+
+
+    <dimen name="toolbar_and_list_item_64">64dp</dimen>
+    <dimen name="title_80">80dp</dimen>
+
 </resources>
