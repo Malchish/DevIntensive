@@ -1,16 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ui.activities.MainActivity">
+<android.support.v4.widget.NestedScrollView
 
-    <TextView
-        android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".ui.activities.MainActivity"
+              android:orientation="vertical">
+    <LinearLayout
+        android:paddingBottom="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/grey"
+        android:gravity="center">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_marginTop="@dimen/space_between_content_areas_8"
+       android:layout_marginBottom="@dimen/space_between_content_areas_8">
+
+        <ImageView
+           style="@style/icon.left"
+
+           android:src="@drawable/ic_call_black_24dp"/>
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="@dimen/content_left_margin_from_screen_edge_72"
+
+           android:layout_weight="1"
+           android:layout_marginLeft="@dimen/card_left_and_right_padding_32"
+           android:layout_marginRight="@dimen/horizontal_margins_on_mobile_16"
+           android:orientation="vertical"
+           android:gravity="center_vertical">
+           <android.support.design.widget.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+           <EditText
+               android:id="@+id/phone_et"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:hint="Мобильный телефон"
+               android:inputType="phone"
+               android:text="+7(903)276-7234"
+               android:enabled="false"
+               android:textColor="@color/black"
+               android:textColorHint="@color/grey"
+               android:focusable="false"/>
+           </android.support.design.widget.TextInputLayout>
+       </LinearLayout>
+       <ImageView
+           style="@style/icon.right"
+           android:src="@drawable/ic_phone_in_talk_black_24dp">
+
+       </ImageView>
+
+   </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_size_2"
+        android:background="@color/grey_light"
+        android:layout_marginLeft="@dimen/content_left_margin_from_screen_edge_72"></View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/space_between_content_areas_8"
+        android:layout_marginBottom="@dimen/space_between_content_areas_8">
+
+        <ImageView
+            style="@style/icon.left"
+            android:src="@drawable/ic_markunread_black_24dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/content_left_margin_from_screen_edge_72"
+
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/card_left_and_right_padding_32"
+            android:layout_marginRight="@dimen/horizontal_margins_on_mobile_16"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/email_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="E-mail"
+                android:text="bambaleylo@gmail.com"
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:focusable="false"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <ImageView
+            style="@style/icon.right"
+            android:src="@drawable/ic_send_black_24dp">
+
+        </ImageView>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_size_2"
+        android:background="@color/grey_light"
+        android:layout_marginLeft="@dimen/content_left_margin_from_screen_edge_72"></View>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/space_between_content_areas_8"
+        android:layout_marginBottom="@dimen/space_between_content_areas_8">
+
+        <ImageView
+            style="@style/icon.left"
+
+            android:src="@drawable/vk"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/content_left_margin_from_screen_edge_72"
+
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/card_left_and_right_padding_32"
+            android:layout_marginRight="@dimen/horizontal_margins_on_mobile_16"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/vk_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Профиль в VK"
+                    android:inputType="textEmailAddress"
+                    android:text="vk.com/alena"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:focusable="false"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <ImageView
+            style="@style/icon.right"
+            android:src="@drawable/ic_remove_red_eye_black_24dp">
+
+        </ImageView>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_size_2"
+        android:background="@color/grey_light"
+        android:layout_marginLeft="@dimen/content_left_margin_from_screen_edge_72"></View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/space_between_content_areas_8"
+        android:layout_marginBottom="@dimen/space_between_content_areas_8">
+
+        <ImageView
+            style="@style/icon.left"
+            android:src="@drawable/github"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/content_left_margin_from_screen_edge_72"
+
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/card_left_and_right_padding_32"
+            android:layout_marginRight="@dimen/horizontal_margins_on_mobile_16"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/github_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Репозиторий"
+                    android:text="github.com/Malchish/DevIntensive"
+                    android:inputType="textMultiLine"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:focusable="false"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <ImageView
+            style="@style/icon.right"
+            android:src="@drawable/ic_remove_red_eye_black_24dp">
+
+        </ImageView>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_size_2"
+        android:background="@color/grey_light"
+        android:layout_marginLeft="@dimen/content_left_margin_from_screen_edge_72"></View>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/space_between_content_areas_8"
+        android:layout_marginBottom="@dimen/space_between_content_areas_8">
+
+        <ImageView
+            style="@style/icon.left"
+            android:src="@drawable/ic_account_circle_black_24dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/card_left_and_right_padding_32"
+            android:layout_marginRight="@dimen/horizontal_margins_on_mobile_16"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/about_me_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="О себе"
+                    android:text="@string/about_me"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:focusable="false"/>
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+        <ImageView
+            style="@style/icon.right">
+
+        </ImageView>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_size_2"
+        android:background="@color/grey_light"
+        android:layout_marginLeft="@dimen/content_left_margin_from_screen_edge_72"></View>
+
+
+
+
+</LinearLayout>
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>
