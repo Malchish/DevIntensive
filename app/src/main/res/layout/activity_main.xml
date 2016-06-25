@@ -21,7 +21,103 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="@color/grey"
+        android:gravity="center"
+        android:orientation="horizontal">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
         android:gravity="center">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="5"
+            android:textSize="@dimen/card_left_and_right_padding_24"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Рейтинг"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/horizontal_margins_on_mobile_16"
+        android:background="@color/grey_light"
+        android:layout_gravity="right"></View>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:gravity="center">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="5"
+            android:textSize="@dimen/card_left_and_right_padding_24"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Написано строк кода"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </LinearLayout>
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/horizontal_margins_on_mobile_16"
+        android:background="@color/grey_light"
+        android:layout_gravity="right"></View>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="5"
+            android:textSize="@dimen/card_left_and_right_padding_24"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Проектов"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
