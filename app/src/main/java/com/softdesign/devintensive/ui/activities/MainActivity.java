@@ -1,5 +1,14 @@
 package com.softdesign.devintensive.ui.activities;
 
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -32,6 +41,8 @@ import java.util.Collection;
 import java.util.List;
 
 
+
+
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 public static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
     protected EditText mEditText;
@@ -44,6 +55,12 @@ public static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
     private FloatingActionButton mFloat;
     private EditText mUserMail, mUserPhome, mUserGit, mUserBio, mUserVk;
     private List<EditText> mUserInfo;
+    private ImageHelper mImageHelper;
+    private Bitmap icon;
+
+
+//    private RoundedAvatarDrawable mRoundedAvatarDrawable = new RoundedAvatarDrawable(icon);
+
     private DataManager mDataManager;
 
     @Override
@@ -51,6 +68,11 @@ public static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
+//
+
+
+//        mImageViewmg = (ImageView)findViewById(R.layout.drawer_header.);
+//        mImageViewmg.setImageResource(R.drawable.arni);
 
         mDataManager = DataManager.getInstance();
 
@@ -78,6 +100,8 @@ public static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
         mFloat.setOnClickListener(this);
         List<String> test = mDataManager.getPreferencesManager().loadUserProfileData();
 
+
+
         if (savedInstanceState == null){
 
         }else {
@@ -86,6 +110,11 @@ public static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
         }
         setupDrawer();
         loadUserValue();
+
+        icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.arni);
+        mImageHelper = new ImageHelper();
+        icon = mImageHelper.getRoundedCornerBitmap(icon, icon.getHeight());
+        setutAvatar();
     }
 
     @Override
@@ -162,6 +191,13 @@ public static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
     public void showSnackBar(String message){
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
+    public void setutAvatar() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View header = navigationView.getHeaderView(0);
+        ImageView mI = (ImageView)header.findViewById(R.id.avatar_img);
+        mI.setImageBitmap(icon);
+    }
+
     public void setupDrawer(){
         NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
@@ -206,5 +242,15 @@ public static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
         }
         mDataManager.getPreferencesManager().saveUserProfileData(userData);
     }
+
+    @Override
+    public void onBackPressed(){
+        if (this.mNavigationDrawer.isDrawerOpen(GravityCompat.START)) {
+            this.mNavigationDrawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 }
