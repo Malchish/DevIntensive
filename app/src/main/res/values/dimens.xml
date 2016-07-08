@@ -49,5 +49,7 @@
     <dimen name="line_size_2">2dp</dimen>
 
     <dimen name="profile_image_size_256">256dp</dimen>
+    <dimen name="for_icon_90">90dp</dimen>
+    <dimen name="enter_text_size">18dp</dimen>
 
 </resources>
