@@ -81,6 +81,120 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:id="@+id/user_info_wrapper"
+        android:paddingBottom="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/grey"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_behavior=".ui.behaviors.UserInfoBehavior"
+        app:behavior_min_height="56dp">
+
+        <LinearLayout
+            android:id="@+id/grey_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/number1_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="5"
+                    android:textSize="@dimen/card_left_and_right_padding_24"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"
+                    />
+
+                <TextView
+                    android:id="@+id/reiting_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Рейтинг"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/horizontal_margins_on_mobile_16"
+                android:background="@color/grey_light"
+                android:layout_gravity="right"></View>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/number2_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="5"
+                    android:textSize="@dimen/card_left_and_right_padding_24"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+
+                <TextView
+                    android:id="@+id/code_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Написано строк кода"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+            </LinearLayout>
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/horizontal_margins_on_mobile_16"
+                android:background="@color/grey_light"
+                android:layout_gravity="right"></View>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/number3_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="5"
+                    android:textSize="@dimen/card_left_and_right_padding_24"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+
+                <TextView
+                    android:id="@+id/projects_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Проектов"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 <include layout="@layout/users_profil_content"/>
 
     <android.support.design.widget.FloatingActionButton

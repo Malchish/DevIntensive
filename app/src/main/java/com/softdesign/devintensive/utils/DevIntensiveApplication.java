@@ -20,4 +20,5 @@ public class DevIntensiveApplication extends Application {
     public static SharedPreferences getSharedPreferences() {
         return sSharedPreferences;
     }
+
 }
