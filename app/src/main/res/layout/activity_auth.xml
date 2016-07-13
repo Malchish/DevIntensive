@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_coordinator_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.softdesign.devintensive.ui.activities.AuthActivity"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    tools:ignore="contentDescription">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_background">
+
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login_bg"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/authorization_box"
+        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="8dp">
+    <!--<LinearLayout
+        android:id="@+id/all"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_bg">-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/card_left_and_right_padding_32"
+                android:layout_marginBottom="@dimen/horizontal_margins_on_mobile_16">
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:background="@color/color_accent"
+                    android:layout_marginTop="@dimen/card_left_and_right_padding_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter"
+                    android:layout_marginTop="@dimen/card_left_and_right_padding_24"
+                    android:layout_marginLeft="@dimen/card_left_and_right_padding_24"
+                    android:textColor="@color/color_accent"
+                    android:textSize="@dimen/enter_text_size"/>
+
+            </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/card_left_and_right_padding_24"
+    android:paddingRight="@dimen/card_left_and_right_padding_24"
+    android:paddingLeft="@dimen/card_left_and_right_padding_24">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_left_and_right_padding_24">
+                <EditText
+                    android:id="@+id/email_enter_et"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:hint="E-mail"
+                    android:textSize="14dp"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/password_et"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Пароль"
+                    android:textSize="14dp"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey"/>
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/login_btn"
+                style="@style/AppTheme.Button.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/horizontal_margins_on_mobile_16"
+                android:minWidth="126dp"
+                android:background="@color/color_accent"
+                android:text="Войти"
+                android:textAllCaps="true"
+                android:theme="@style/AppTheme.Button.Red"/>
+
+            <TextView
+                android:id="@+id/remember_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:text="Забыли пароль?"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="@dimen/horizontal_margins_on_mobile_16"
+                android:textSize="14dp"
+                android:layout_gravity="center_horizontal"/>
+</LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+    </FrameLayout>
+    <!--</LinearLayout>-->
+
+    <!--<android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_button_enter"
+        android:src="@drawable/ic_add_black_24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/upper_linLay"
+        app:layout_anchorGravity="bottom|right"
+        android:layout_marginTop="@dimen/card_content_left_padding_104"/>-->
+
+</android.support.design.widget.CoordinatorLayout>
+
+

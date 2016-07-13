@@ -16,7 +16,8 @@ public interface ConstantManager {
     String USER_GIT_KEY = "USER_GIT_KEY";
     String USER_BIO_KEY = "USER_BIO_KEY";
     String USER_PHOTO_KEY = "USER_PHOTO_KEY";
-
+    String AUTH_TOKEN_KEY = "AUTH_TOKEN_KEY";
+    String USER_ID_KEY = "USER_ID_KEY";
 
 
     int LOAD_PROFILE_PHOTO = 1;
@@ -26,4 +27,5 @@ public interface ConstantManager {
     int REQUEST_SETTING_CODE = 101;
     int CAMERA_REQUEST_PERMISSION_CODE = 102;
     int CALL_REQUEST_PERMISSION_CODE = 103;
+
 }
