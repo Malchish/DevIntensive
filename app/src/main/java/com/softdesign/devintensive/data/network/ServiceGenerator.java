@@ -1,9 +1,13 @@
 package com.softdesign.devintensive.data.network;
 
+import com.softdesign.devintensive.utils.AppConfig;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+
 
 /**
  * Created by alena on 13.07.16.
@@ -19,6 +23,7 @@ public class ServiceGenerator {
     public static <S> S createService(Class <S> serviceClass){
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         httpClient.addInterceptor(logging);

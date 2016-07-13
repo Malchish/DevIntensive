@@ -12,6 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
+import com.softdesign.devintensive.data.managers.DataManager;
+import com.softdesign.devintensive.data.network.req.UserLoginReq;
+import com.softdesign.devintensive.data.network.res.UserModelRes;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
@@ -20,12 +27,15 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     private TextView mRememberPassward;
     private EditText mLogin, mPassward;
     private CoordinatorLayout mCoordinatorLayout;
+    private DataManager mDatamanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
+
+        mDatamanager = DataManager.getInstance();
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
         mRememberPassward = (TextView)findViewById(R.id.remember_txt);
@@ -43,7 +53,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
         switch (v.getId()){
             case R.id.login_btn:
-                loginSuccess();
+                singIn();
                 break;
             case R.id.remember_txt:
                 rememberPassward();
@@ -60,9 +70,30 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         startActivity(rememberIntent);
     }
 
-    private void loginSuccess(){
-        showSnackBar("Вход");
-    }
+    private void loginSuccess(Response<UserModelRes> response){
 
+        showSnackBar(response.body().getData().getToken());
+    }
+    private void singIn(){
+        Call<UserModelRes> call = mDatamanager.loginUser(new UserLoginReq("email", "password"));
+
+        call.enqueue(new Callback<UserModelRes>() {
+            @Override
+            public void onResponse(Call<UserModelRes> call, Response<UserModelRes> response) {
+                if (response.code() == 200) {
+                    loginSuccess(response);
+                } else if (response.code() == 404) {
+                    showSnackBar("Неверный логин или пароль");
+                } else{
+                    showSnackBar("Что-то не так...");
+            }
+        }
+
+            @Override
+            public void onFailure(Call<UserModelRes> call, Throwable t) {
+    //TODO: обработать ошибки ретрофита
+            }
+        });
+    }
 
 }

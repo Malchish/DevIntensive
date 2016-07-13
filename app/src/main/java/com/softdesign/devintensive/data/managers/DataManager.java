@@ -21,17 +21,22 @@ import retrofit2.Call;
  */
 public class DataManager {
 
-    private Context mContext;
+
+    private static DataManager INSTANCE = null;
+
+    //private Context mContext;
     private PreferencesManager mPreferencesManager;
     private RestService mRestService;
 
-    private static DataManager INSTANCE = null;
+
 
 
     public DataManager(){
         this.mPreferencesManager = new PreferencesManager();
-        //this.mContext = DevIntensiveApplication.getContext();
         this.mRestService = ServiceGenerator.createService(RestService.class);
+
+        //this.mContext = DevIntensiveApplication.getContext();
+
     }
 
     public static DataManager getInstance() {
@@ -46,10 +51,10 @@ public class DataManager {
         return mPreferencesManager;
     }
 
-    public Context getContext(){
+    /*public Context getContext(){
         return mContext;
     }
-
+*/
     //region --Network--
 
     public Call<UserModelRes> loginUser (UserLoginReq userLoginReq){
