@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by alena on 13.07.16.
  */
-public class ServiceGenerator {
+public  class ServiceGenerator {
 
     private static OkHttpClient.Builder httpClient =  new OkHttpClient.Builder();
 

@@ -62,7 +62,7 @@ public class PreferencesManager {
         editor.putString(ConstantManager.USER_ID_KEY, userId);
         editor.apply();
     }
-    public String getUserId(){
+    public String getUserId(String id){
         return mSharedPreferences.getString(ConstantManager.USER_ID_KEY, "null");
     }
 }
