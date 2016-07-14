@@ -17,7 +17,9 @@ import com.softdesign.devintensive.data.network.req.UserLoginReq;
 import com.softdesign.devintensive.data.network.res.UserModelRes;
 import com.softdesign.devintensive.utils.NetworkStatusCheker;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,7 +82,11 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
         Intent loginIntent = new Intent(this, MainActivity.class);
         startActivity(loginIntent);
+
         saveUserValues(userModelRes);
+        saveUserFields(userModelRes);
+        saveUserNames(userModelRes);
+        saveUserPhotoAvatar(userModelRes);
     }
     private void singIn() {
 
@@ -108,6 +114,20 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
             showSnackBar("Сеть на дынный момент не доступна, попробуйте позже");
         }
     }
+
+    private void saveUserNames(UserModelRes userModel){
+        String[] userName = {
+                userModel.getData().getUser().getFirstName(),
+                userModel.getData().getUser().getSecondName(),
+                userModel.getData().getUser().getContacts().getEmail()
+        };
+
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < userName.length; i++) {
+            list.add(userName[i]);
+        }
+        mDatamanager.getPreferencesManager().saveUserName(list);
+    }
     private void saveUserValues(UserModelRes userModel){
         int[] userValues = {
                 userModel.getData().getUser().getProfileValues().getRaiting(),
@@ -115,6 +135,28 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                 userModel.getData().getUser().getProfileValues().getProjects(),
         };
         mDatamanager.getPreferencesManager().saveUserProfileValues(userValues);
+    }
+    private void saveUserFields(UserModelRes userModel){
+        String[] userFields = {
+                userModel.getData().getUser().getContacts().getPhone(),
+                userModel.getData().getUser().getContacts().getEmail(),
+                userModel.getData().getUser().getContacts().getVk(),
+                userModel.getData().getUser().getRepositories().getRepo().get(0).getGit(),
+                userModel.getData().getUser().getPublicInfo().getBio()
+        };
+
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < userFields.length; i++) {
+            list.add(userFields[i]);
+        }
+        mDatamanager.getPreferencesManager().saveUserProfileData(list);
+    }
+    private void saveUserPhotoAvatar(UserModelRes userModel){
+        Uri photo = Uri.parse(userModel.getData().getUser().getPublicInfo().getPhoto());
+        Uri avatar = Uri.parse(userModel.getData().getUser().getPublicInfo().getAvatar());
+
+        mDatamanager.getPreferencesManager().saveUserPhoto(photo);
+        mDatamanager.getPreferencesManager().saveUserAvatar(avatar);
     }
 
 }

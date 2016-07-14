@@ -21,6 +21,10 @@ public interface ConstantManager {
     String USER_RATING_VALUE = "USER_RATING_VALUE";
     String USER_CODE_LINES_VALUE = "USER_CODE_LINES_VALUE";
     String USER_PROJECTS_VALUE = "USER_PROJECTS_VALUE";
+    String USER_AVATAR_KEY = "USER_AVATAR_KEY";
+    String USER_FIRST_NAME = "USER_FIRST_NAME";
+    String USER_SECOND_NAME = "USER_SECOND_NAME";
+
 
     int LOAD_PROFILE_PHOTO = 1;
     int REQUEST_CAMERA_PICTURE = 99;
@@ -31,4 +35,5 @@ public interface ConstantManager {
     int CALL_REQUEST_PERMISSION_CODE = 103;
 
 
+    //int NULL = 0;
 }

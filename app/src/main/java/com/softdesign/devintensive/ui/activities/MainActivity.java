@@ -62,6 +62,7 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.PrivateKey;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -94,7 +95,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private boolean isValid = false;
     private TextView mUserValueRating, mUserValueCodeLines, mUserValueProjects;
     private List<TextView> mUserValueViews;
+    private List<ImageView> mUserPhotoAvatar;
+    private TextView mMenuName, mMenuEmail;
+    private List<TextView> mMenuList;
+    private NavigationView mNavigationView;
 
+  /*  private ImageView mPhoto;
+    private ImageView mAvatar;
+    private  EditText m
+*/
 
 
 
@@ -119,7 +128,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mEmailPic = (ImageView)findViewById(R.id.email_pic);
         mGithubPic = (ImageView)findViewById(R.id.github_pic);
         mVkPic = (ImageView)findViewById(R.id.vk_pic);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
+        mMenuEmail = (TextView)mNavigationView.getHeaderView(0).findViewById(R.id.user_email_txt);
+        mMenuName = (TextView)mNavigationView.getHeaderView(0).findViewById(R.id.user_name_txt);
 
         mFloat = (FloatingActionButton) findViewById(R.id.floating_button);
         mUserMail = (EditText) findViewById(R.id.email_et);
@@ -129,9 +141,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mUserVk = (EditText) findViewById(R.id.vk_et);
         mCallPic = (ImageView)findViewById(R.id.call_img);
 
+
         mUserValueRating = (TextView) findViewById(R.id.num_rating_tv);
         mUserValueCodeLines = (TextView)findViewById(R.id.num_code_tv);
         mUserValueProjects = (TextView)findViewById(R.id.num_proj_tv);
+
+
 
         mUserValueViews = new ArrayList<>();
         mUserValueViews.add(mUserValueRating);
@@ -141,9 +156,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mUserInfo = new ArrayList<>();
         mUserInfo.add(mUserPhome);
         mUserInfo.add(mUserMail);
+        mUserInfo.add(mUserVk);
         mUserInfo.add(mUserGit);
         mUserInfo.add(mUserBio);
-        mUserInfo.add(mUserVk);
+
+        /*mMenuList = new ArrayList<>();
+        mMenuList.add(mMenuName);*/
+        //mMenuList.add(mMenuEmail);
+
 
         mFloat.setOnClickListener(this);
         mPlaceholder.setOnClickListener(this);
@@ -159,6 +179,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setupDrawer();
         loadUserValue();
         loadUserInfoValue();
+        loadUserName();
 
 
         Picasso.with(this)
@@ -341,9 +362,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void setutAvatar() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header = navigationView.getHeaderView(0);
-        ImageView mI = (ImageView) header.findViewById(R.id.avatar_img);
+        ImageView mI = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img);
         mI.setImageBitmap(icon);
     }
 
@@ -599,6 +618,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mUserValueViews.get(i).setText(userData.get(i));
         }
     }
+    private void loadUserName(){
+
+        String firstName = mDataManager.getPreferencesManager().loadUserFirstLastName().get(0);
+        String lastName = mDataManager.getPreferencesManager().loadUserFirstLastName().get(1);
+        String email = mDataManager.getPreferencesManager().loadUserFirstLastName().get(2);
+
+        mMenuName.setText(String.format("%s %s", firstName,lastName));
+        mMenuEmail.setText(email);
+
+        /*mMenuName.setText(String.format("%s, %s", mDataManager.getPreferencesManager().loadUserFirstLastName().get(0),
+                mDataManager.getPreferencesManager().loadUserFirstLastName().get(1)));*/
+    }
+   /* private void loadUserPhotoAvatar(){
+        List<String> userPhotoAvatar = new ArrayList<>();
+        userPhotoAvatar.add(mDataManager.getPreferencesManager().loadUserPhoto().toString());
+        userPhotoAvatar.add(mDataManager.getPreferencesManager().loadUserAvatar().toString());
+        for (int i = 0; i < userPhotoAvatar.size(); i++) {
+            mUserPhotoAvatar.get(i).setImageResource(Integer.parseInt(userPhotoAvatar.get(i)));
+        }
+    }*/
     /*вызов невных интентов для перехода в другие приложения при нажатии на иконку справа*/
 
     public void sendEmail(){
