@@ -15,6 +15,7 @@ import android.graphics.Paint;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
@@ -57,6 +58,7 @@ import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.managers.TextValidator;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Callback;
 
 import org.w3c.dom.Text;
 
@@ -97,8 +99,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<TextView> mUserValueViews;
     private List<ImageView> mUserPhotoAvatar;
     private TextView mMenuName, mMenuEmail;
-    private List<TextView> mMenuList;
     private NavigationView mNavigationView;
+    private ImageView mUserAvatar;
 
   /*  private ImageView mPhoto;
     private ImageView mAvatar;
@@ -132,6 +134,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mMenuEmail = (TextView)mNavigationView.getHeaderView(0).findViewById(R.id.user_email_txt);
         mMenuName = (TextView)mNavigationView.getHeaderView(0).findViewById(R.id.user_name_txt);
+        mUserAvatar = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img);
+
 
         mFloat = (FloatingActionButton) findViewById(R.id.floating_button);
         mUserMail = (EditText) findViewById(R.id.email_et);
@@ -195,10 +199,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
 
-        icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.arni);
+       /* icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.arni);
+
+        mUserAvatar.setImageURI(mDataManager.getPreferencesManager().loadUserPhoto());
         mImageHelper = new ImageHelper();
-        icon = mImageHelper.getRoundedCornerBitmap(icon, icon.getHeight());
-        setutAvatar();
+        icon = mImageHelper.getRoundedCornerBitmap(icon, icon.getHeight());*/
+
+
+
+//        try {
+//            icon = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mDataManager.getPreferencesManager().loadUserAvatar());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        mImageHelper = new ImageHelper();
+//        icon = mImageHelper.getRoundedCornerBitmap(icon, icon.getHeight());
+//        mUserAvatar.setImageBitmap(icon);
+
+
+        Picasso.with(this)
+                .load(mDataManager.getPreferencesManager().loadUserAvatar())
+                .placeholder(R.drawable.arni)
+                .into(mUserAvatar, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        ImageHelper imageHelper = new ImageHelper();
+                        Bitmap originalIcon = ((BitmapDrawable)mUserAvatar.getDrawable()).getBitmap();
+                        Bitmap roundedIcon = imageHelper.getRoundedCornerBitmap(originalIcon, originalIcon.getHeight());
+                        mUserAvatar.setImageBitmap(roundedIcon);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+
+
+
+
+
+        //setutAvatar();
 
 
 
@@ -362,8 +404,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void setutAvatar() {
-        ImageView mI = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img);
-        mI.setImageBitmap(icon);
+        mUserAvatar = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img);
+        mUserAvatar.setImageBitmap(icon);
     }
 
     public void setupDrawer() {

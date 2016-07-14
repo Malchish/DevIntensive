@@ -87,9 +87,9 @@ public class PreferencesManager {
         editor.putString(ConstantManager.USER_AVATAR_KEY, uri.toString());
         editor.apply();
     }
-    /*public Uri loadUserAvatar(){
+    public Uri loadUserAvatar(){
         return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_AVATAR_KEY, "android.resource://com.softdesign.devintensive/drawable/arni"));
-    }*/
+    }
 
     public void saveAuthToken(String authToken){
         SharedPreferences.Editor editor = mSharedPreferences.edit();
