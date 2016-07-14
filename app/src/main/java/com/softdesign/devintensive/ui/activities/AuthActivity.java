@@ -17,6 +17,8 @@ import com.softdesign.devintensive.data.network.req.UserLoginReq;
 import com.softdesign.devintensive.data.network.res.UserModelRes;
 import com.softdesign.devintensive.utils.NetworkStatusCheker;
 
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,13 +73,14 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         startActivity(rememberIntent);
     }
 
-    private void loginSuccess(Response<UserModelRes> response){
-        mDatamanager.getPreferencesManager().saveAuthToken(response.body().getData().getToken());
-        mDatamanager.getPreferencesManager().getUserId(response.body().getData().getUser().getId());
-        showSnackBar(response.body().getData().getToken());
+    private void loginSuccess(UserModelRes userModelRes){
+        mDatamanager.getPreferencesManager().saveAuthToken(userModelRes.getData().getToken());
+        mDatamanager.getPreferencesManager().saveUserId(userModelRes.getData().getUser().getId());
+        showSnackBar(userModelRes.getData().getToken());
 
         Intent loginIntent = new Intent(this, MainActivity.class);
         startActivity(loginIntent);
+        saveUserValues(userModelRes);
     }
     private void singIn() {
 
@@ -88,7 +91,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<UserModelRes> call, Response<UserModelRes> response) {
                     if (response.code() == 200) {
-                        loginSuccess(response);
+                        loginSuccess(response.body());
                     } else if (response.code() == 404) {
                         showSnackBar("Неверный логин или пароль");
                     } else {
@@ -104,6 +107,14 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         }else{
             showSnackBar("Сеть на дынный момент не доступна, попробуйте позже");
         }
+    }
+    private void saveUserValues(UserModelRes userModel){
+        int[] userValues = {
+                userModel.getData().getUser().getProfileValues().getRaiting(),
+                userModel.getData().getUser().getProfileValues().getLinesCode(),
+                userModel.getData().getUser().getProfileValues().getProjects(),
+        };
+        mDatamanager.getPreferencesManager().saveUserProfileValues(userValues);
     }
 
 }

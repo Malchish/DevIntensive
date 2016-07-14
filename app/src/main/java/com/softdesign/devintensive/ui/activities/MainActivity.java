@@ -58,6 +58,8 @@ import com.softdesign.devintensive.data.managers.TextValidator;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -90,6 +92,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Uri mSelectedImage = null;
     private ImageView mPhotoView, mCallPic, mEmailPic, mGithubPic, mVkPic;
     private boolean isValid = false;
+    private TextView mUserValueRating, mUserValueCodeLines, mUserValueProjects;
+    private List<TextView> mUserValueViews;
 
 
 
@@ -125,6 +129,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mUserVk = (EditText) findViewById(R.id.vk_et);
         mCallPic = (ImageView)findViewById(R.id.call_img);
 
+        mUserValueRating = (TextView) findViewById(R.id.num_rating_tv);
+        mUserValueCodeLines = (TextView)findViewById(R.id.num_code_tv);
+        mUserValueProjects = (TextView)findViewById(R.id.num_proj_tv);
+
+        mUserValueViews = new ArrayList<>();
+        mUserValueViews.add(mUserValueRating);
+        mUserValueViews.add(mUserValueCodeLines);
+        mUserValueViews.add(mUserValueProjects);
+
         mUserInfo = new ArrayList<>();
         mUserInfo.add(mUserPhome);
         mUserInfo.add(mUserMail);
@@ -145,6 +158,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setupToolbar();
         setupDrawer();
         loadUserValue();
+        loadUserInfoValue();
+
 
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
@@ -576,6 +591,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
 
+    }
+
+    private void loadUserInfoValue(){
+        List<String> userData = mDataManager.getPreferencesManager().loadUserProfileValues();
+        for (int i = 0; i < userData.size(); i++) {
+            mUserValueViews.get(i).setText(userData.get(i));
+        }
     }
     /*вызов невных интентов для перехода в другие приложения при нажатии на иконку справа*/
 
