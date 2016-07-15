@@ -24,7 +24,7 @@ public interface ConstantManager {
     String USER_AVATAR_KEY = "USER_AVATAR_KEY";
     String USER_FIRST_NAME = "USER_FIRST_NAME";
     String USER_SECOND_NAME = "USER_SECOND_NAME";
-
+    String PARCELABLE_KEY = "PARCELABLE_KEY";
 
     int LOAD_PROFILE_PHOTO = 1;
     int REQUEST_CAMERA_PICTURE = 99;
@@ -33,6 +33,7 @@ public interface ConstantManager {
     int REQUEST_SETTING_CODE = 101;
     int CAMERA_REQUEST_PERMISSION_CODE = 102;
     int CALL_REQUEST_PERMISSION_CODE = 103;
+
 
 
     //int NULL = 0;

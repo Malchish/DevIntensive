@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/content_left_margin_from_screen_edge_72">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/content_associated_with_an_icon_or_avatar_left_margin_72"
+        android:layout_centerVertical="true">
+        <EditText
+            android:id="@+id/github_et"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Репозиторий"
+            android:text="github.com/Malchish/DevIntensive"
+            android:inputType="textMultiLine"
+            android:enabled="false"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:focusable="false"/>
+    </android.support.design.widget.TextInputLayout>
+    <ImageView
+        android:id="@+id/vk_pic"
+        style="@style/icon.right"
+        android:src="@drawable/ic_remove_red_eye_black_24dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        />
+</RelativeLayout>
