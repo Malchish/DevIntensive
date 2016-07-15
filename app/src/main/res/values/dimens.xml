@@ -51,5 +51,8 @@
     <dimen name="profile_image_size_256">256dp</dimen>
     <dimen name="for_icon_90">90dp</dimen>
     <dimen name="enter_text_size">18dp</dimen>
+    <dimen name="textSize_20">20dp</dimen>
+    <dimen name="radius_2">2dp</dimen>
+    <dimen name="textSize_14">14dp</dimen>
 
 </resources>

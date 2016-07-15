@@ -187,6 +187,7 @@ public class UserModelRes {
         public String getPhoto() {
             return photo;
         }
+
     }
 
     public class ProfileValues {

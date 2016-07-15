@@ -8,4 +8,6 @@
     <string name="user_title_change">Изменить фотографию профиля</string>
     <string name="choose_photo">Выберите фото</string>
     <string name="enter">ВОЙТИ</string>
+    <string name="textSize_14">14dp</string>
+
 </resources>
