@@ -54,5 +54,6 @@
     <dimen name="textSize_20">20dp</dimen>
     <dimen name="radius_2">2dp</dimen>
     <dimen name="textSize_14">14dp</dimen>
+    <dimen name="size_112">112dp</dimen>
 
 </resources>
