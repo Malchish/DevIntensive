@@ -15,6 +15,7 @@ import android.graphics.Paint;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
@@ -57,9 +58,13 @@ import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.managers.TextValidator;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Callback;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.PrivateKey;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -90,7 +95,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Uri mSelectedImage = null;
     private ImageView mPhotoView, mCallPic, mEmailPic, mGithubPic, mVkPic;
     private boolean isValid = false;
+    private TextView mUserValueRating, mUserValueCodeLines, mUserValueProjects;
+    private List<TextView> mUserValueViews;
+    private List<ImageView> mUserPhotoAvatar;
+    private TextView mMenuName, mMenuEmail;
+    private NavigationView mNavigationView;
+    private ImageView mUserAvatar;
 
+  /*  private ImageView mPhoto;
+    private ImageView mAvatar;
+    private  EditText m
+*/
 
 
 
@@ -115,6 +130,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mEmailPic = (ImageView)findViewById(R.id.email_pic);
         mGithubPic = (ImageView)findViewById(R.id.github_pic);
         mVkPic = (ImageView)findViewById(R.id.vk_pic);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        mMenuEmail = (TextView)mNavigationView.getHeaderView(0).findViewById(R.id.user_email_txt);
+        mMenuName = (TextView)mNavigationView.getHeaderView(0).findViewById(R.id.user_name_txt);
+        mUserAvatar = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img);
 
 
         mFloat = (FloatingActionButton) findViewById(R.id.floating_button);
@@ -125,12 +145,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mUserVk = (EditText) findViewById(R.id.vk_et);
         mCallPic = (ImageView)findViewById(R.id.call_img);
 
+
+        mUserValueRating = (TextView) findViewById(R.id.num_rating_tv);
+        mUserValueCodeLines = (TextView)findViewById(R.id.num_code_tv);
+        mUserValueProjects = (TextView)findViewById(R.id.num_proj_tv);
+
+
+
+        mUserValueViews = new ArrayList<>();
+        mUserValueViews.add(mUserValueRating);
+        mUserValueViews.add(mUserValueCodeLines);
+        mUserValueViews.add(mUserValueProjects);
+
         mUserInfo = new ArrayList<>();
         mUserInfo.add(mUserPhome);
         mUserInfo.add(mUserMail);
+        mUserInfo.add(mUserVk);
         mUserInfo.add(mUserGit);
         mUserInfo.add(mUserBio);
-        mUserInfo.add(mUserVk);
+
+        /*mMenuList = new ArrayList<>();
+        mMenuList.add(mMenuName);*/
+        //mMenuList.add(mMenuEmail);
+
 
         mFloat.setOnClickListener(this);
         mPlaceholder.setOnClickListener(this);
@@ -145,6 +182,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setupToolbar();
         setupDrawer();
         loadUserValue();
+        loadUserInfoValue();
+        loadUserName();
+
 
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
@@ -159,10 +199,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
 
-        icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.arni);
+       /* icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.arni);
+
+        mUserAvatar.setImageURI(mDataManager.getPreferencesManager().loadUserPhoto());
         mImageHelper = new ImageHelper();
-        icon = mImageHelper.getRoundedCornerBitmap(icon, icon.getHeight());
-        setutAvatar();
+        icon = mImageHelper.getRoundedCornerBitmap(icon, icon.getHeight());*/
+
+
+
+//        try {
+//            icon = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mDataManager.getPreferencesManager().loadUserAvatar());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        mImageHelper = new ImageHelper();
+//        icon = mImageHelper.getRoundedCornerBitmap(icon, icon.getHeight());
+//        mUserAvatar.setImageBitmap(icon);
+
+
+        Picasso.with(this)
+                .load(mDataManager.getPreferencesManager().loadUserAvatar())
+                .placeholder(R.drawable.arni)
+                .into(mUserAvatar, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        ImageHelper imageHelper = new ImageHelper();
+                        Bitmap originalIcon = ((BitmapDrawable)mUserAvatar.getDrawable()).getBitmap();
+                        Bitmap roundedIcon = imageHelper.getRoundedCornerBitmap(originalIcon, originalIcon.getHeight());
+                        mUserAvatar.setImageBitmap(roundedIcon);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+
+
+
+
+
+        //setutAvatar();
 
 
 
@@ -326,10 +404,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void setutAvatar() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header = navigationView.getHeaderView(0);
-        ImageView mI = (ImageView) header.findViewById(R.id.avatar_img);
-        mI.setImageBitmap(icon);
+        mUserAvatar = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img);
+        mUserAvatar.setImageBitmap(icon);
     }
 
     public void setupDrawer() {
@@ -577,6 +653,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     }
+
+    private void loadUserInfoValue(){
+        List<String> userData = mDataManager.getPreferencesManager().loadUserProfileValues();
+        for (int i = 0; i < userData.size(); i++) {
+            mUserValueViews.get(i).setText(userData.get(i));
+        }
+    }
+    private void loadUserName(){
+
+        String firstName = mDataManager.getPreferencesManager().loadUserFirstLastName().get(0);
+        String lastName = mDataManager.getPreferencesManager().loadUserFirstLastName().get(1);
+        String email = mDataManager.getPreferencesManager().loadUserFirstLastName().get(2);
+
+        mMenuName.setText(String.format("%s %s", firstName,lastName));
+        mMenuEmail.setText(email);
+
+        /*mMenuName.setText(String.format("%s, %s", mDataManager.getPreferencesManager().loadUserFirstLastName().get(0),
+                mDataManager.getPreferencesManager().loadUserFirstLastName().get(1)));*/
+    }
+   /* private void loadUserPhotoAvatar(){
+        List<String> userPhotoAvatar = new ArrayList<>();
+        userPhotoAvatar.add(mDataManager.getPreferencesManager().loadUserPhoto().toString());
+        userPhotoAvatar.add(mDataManager.getPreferencesManager().loadUserAvatar().toString());
+        for (int i = 0; i < userPhotoAvatar.size(); i++) {
+            mUserPhotoAvatar.get(i).setImageResource(Integer.parseInt(userPhotoAvatar.get(i)));
+        }
+    }*/
     /*вызов невных интентов для перехода в другие приложения при нажатии на иконку справа*/
 
     public void sendEmail(){
