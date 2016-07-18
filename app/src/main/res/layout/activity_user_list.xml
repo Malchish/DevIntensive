@@ -15,13 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
+                <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar_layout"
             android:layout_marginTop="@dimen/card_left_and_right_padding_24"
             android:theme="@style/AppTheme.AppBarOverlay"
             android:background="@color/color_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
 
 
 
@@ -35,6 +36,9 @@
                 android:layout_height="?attr/actionBarSize"
                 app:theme="@style/ToolBarStyle"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+
+
 
         </android.support.design.widget.AppBarLayout>
 

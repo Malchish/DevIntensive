@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.network.res.UserListRes;
+import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.view.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +31,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         this.mCustomClickListener = customClickListener;
     }
 
+
+
     @Override
     public UserAdapter.UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -37,6 +40,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         View convertView  = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_list, parent, false);
 
         return new UserViewHolder(convertView, mCustomClickListener);
+
     }
 
     @Override
