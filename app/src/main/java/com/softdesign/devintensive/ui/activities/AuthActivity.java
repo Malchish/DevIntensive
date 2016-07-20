@@ -105,7 +105,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent loginIntent = new Intent(AuthActivity.this, UserListActivity.class);
+                Intent loginIntent = new Intent(AuthActivity.this, MainActivity.class);
                 startActivity(loginIntent);
             }
         }, AppConfig.START_DELAY);

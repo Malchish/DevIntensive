@@ -414,6 +414,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 showSnackBar(item.getTitle().toString());
+
+                switch(item.getItemId()) {
+                    case R.id.team_menu:
+                        Intent a = new Intent(MainActivity.this, UserListActivity.class);
+                        startActivity(a);
+                        break;
+                    case R.id.user_profile_menu:
+                        break;
+                }
+
                 item.setChecked(true);
                 mNavigationDrawer.closeDrawer(GravityCompat.START);
                 return false;
