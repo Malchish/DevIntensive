@@ -26,11 +26,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:background="@color/grey"
             android:gravity="center"
             android:orientation="horizontal">
-            <!--<LinearLayout
-                android:id="@+id/grey_linear"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">-->
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -122,9 +117,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                         android:fontFamily="sans-serif-condensed"/>
                 </LinearLayout>
             </LinearLayout>
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -250,6 +242,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
         </LinearLayout>
+        </LinearLayout>
+
+
     <!--</LinearLayout>-->
 
 

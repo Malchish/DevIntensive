@@ -121,26 +121,7 @@ public class UserListActivity extends AppCompatActivity {
         }
     }
 
-        /*mUser = mDataManager.getUserListFromDb();
 
-
-        if (mUser.size() == 0){
-            showSnackBar("Список пользователей не может быть загружен");
-        }else {
-
-            mUserAdapter = new UserAdapter(mUser, new UserAdapter.CustomClickListener() {
-                @Override
-                public void onUserItemClickListener(int position) {
-
-                    UserDTO userDTO = new UserDTO(mUser.get(position));
-                    Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
-                    profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, userDTO);
-                    startActivity(profileIntent);
-                }
-            });
-        }
-
-    }*/
     private void loadUsersSearch(final List<User> users) {
         mUserAdapter = new UserAdapter(users, new UserAdapter.CustomClickListener() {
             @Override
@@ -161,33 +142,7 @@ public class UserListActivity extends AppCompatActivity {
             sPositionItemUser = 0;
             }
         }
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(this);
-
-        return true;
-    }*/
-    /*@Override
-    public boolean onQueryTextSubmit(String s) {
-        List<User> listOfUsers = (List<User>) mUserListResCall.body().getData();
-        mUserSearch = new ArrayList<>();
-        for (User user : listOfUsers) {
-            if (user.getFullName().toLowerCase().contains(s.toLowerCase())) {
-                mUserSearch.add(user);
-            }
-        }
-        loadUsersSearch(mUserSearch);
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return false;
-    }*/
 
 
     @Override
