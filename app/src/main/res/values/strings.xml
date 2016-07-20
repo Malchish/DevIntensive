@@ -9,6 +9,6 @@
     <string name="choose_photo">Выберите фото</string>
     <string name="enter">ВОЙТИ</string>
     <string name="textSize_14">14dp</string>
-    <string name="hint_search">Search here</string>
+    <string name="hint_search">Поиск пользователя</string>
 
 </resources>

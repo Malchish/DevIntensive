@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,6 +25,7 @@ import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.network.res.UserListRes;
 
+import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.adapters.UserAdapter;
 import com.softdesign.devintensive.utils.ConstantManager;
@@ -34,13 +34,11 @@ import com.softdesign.devintensive.utils.ConstantManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 
 
-public class UserListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class UserListActivity extends AppCompatActivity {
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "UserListActivity";
     private CoordinatorLayout mCoordinatorLayout;
@@ -49,8 +47,8 @@ public class UserListActivity extends AppCompatActivity implements SearchView.On
     private RecyclerView mRecyclerView;
     private DataManager mDataManager;
     private UserAdapter mUserAdapter;
-    private List<UserListRes.UserData> mUser;
-    private List<UserListRes.UserData> mUserSearch;
+    private List<User> mUser;
+    private List<User> mUserSearch;
     private static Response<UserListRes> mUserListResCall;
     private static int sPositionItemUser;
 
@@ -71,7 +69,7 @@ public class UserListActivity extends AppCompatActivity implements SearchView.On
 
         setUpToolBar();
         setUpDrawer();
-        loadUsers();
+        loadUsersFromDb();
 
 
     }
@@ -105,44 +103,55 @@ public class UserListActivity extends AppCompatActivity implements SearchView.On
 
         //TODO: реализовать переход в другую активность при клике по элементу меню в NavigationDrawer
     }
-    private void loadUsers() {
+    private void loadUsersFromDb() {
 
-        Call<UserListRes> call = mDataManager.getUserList();
+        mUser = mDataManager.getUserListFromDb();
 
-        call.enqueue(new Callback<UserListRes>() {
-            @Override
-            public void onResponse(Call<UserListRes> call, Response<UserListRes> response) {
-                try {
-                    mUserListResCall = response;
-                    mUser = response.body().getData();
-                    loadUsersSearch(mUser);
-                    /*mUserAdapter = new UserAdapter(mUser, new UserAdapter.CustomClickListener() {
-                        @Override
-                        public void onUserItemClickListener(int position) {
 
-                            UserDTO userDTO = new UserDTO(mUser.get(position));
-                            Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
-                            profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, userDTO);
-                            startActivity(profileIntent);
-                        }
-                    });
-                    mRecyclerView.setAdapter(mUserAdapter);
-*/                }catch (NullPointerException e){
-                    Log.e(TAG, e.toString());
-                    showSnackBar("Something goes wrong");
+        if (mUser.size() == 0) {
+            showSnackBar("Список пользователей не может быть загружен");
+        } else {
+
+            mUserAdapter = new UserAdapter(mUser, new UserAdapter.CustomClickListener() {
+                @Override
+                public void onUserItemClickListener(int position) {
+
+                    UserDTO userDTO = new UserDTO(mUser.get(position));
+                    Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
+                    profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, userDTO);
+                    startActivity(profileIntent);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<UserListRes> call, Throwable t) {
-                //TODO: обработка ошибок
-            }
-        });
+            });
+            mRecyclerView.setAdapter(mUserAdapter);
+        }
     }
-    private void loadUsersSearch(final List<UserListRes.UserData> users) {
+
+        /*mUser = mDataManager.getUserListFromDb();
+
+
+        if (mUser.size() == 0){
+            showSnackBar("Список пользователей не может быть загружен");
+        }else {
+
+            mUserAdapter = new UserAdapter(mUser, new UserAdapter.CustomClickListener() {
+                @Override
+                public void onUserItemClickListener(int position) {
+
+                    UserDTO userDTO = new UserDTO(mUser.get(position));
+                    Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
+                    profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, userDTO);
+                    startActivity(profileIntent);
+                }
+            });
+        }
+
+    }*/
+    private void loadUsersSearch(final List<User> users) {
         mUserAdapter = new UserAdapter(users, new UserAdapter.CustomClickListener() {
             @Override
             public void onUserItemClickListener(int position) {
+
+
 
                 sPositionItemUser = position;
                 UserDTO userProfile = new UserDTO(users.get(position));
@@ -157,7 +166,7 @@ public class UserListActivity extends AppCompatActivity implements SearchView.On
             sPositionItemUser = 0;
             }
         }
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
@@ -166,12 +175,12 @@ public class UserListActivity extends AppCompatActivity implements SearchView.On
         searchView.setOnQueryTextListener(this);
 
         return true;
-    }
-    @Override
+    }*/
+    /*@Override
     public boolean onQueryTextSubmit(String s) {
-        List<UserListRes.UserData> listOfUsers = mUserListResCall.body().getData();
+        List<User> listOfUsers = (List<User>) mUserListResCall.body().getData();
         mUserSearch = new ArrayList<>();
-        for (UserListRes.UserData user : listOfUsers) {
+        for (User user : listOfUsers) {
             if (user.getFullName().toLowerCase().contains(s.toLowerCase())) {
                 mUserSearch.add(user);
             }
@@ -183,5 +192,5 @@ public class UserListActivity extends AppCompatActivity implements SearchView.On
     @Override
     public boolean onQueryTextChange(String s) {
         return false;
-    }
+    }*/
 }
