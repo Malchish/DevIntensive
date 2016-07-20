@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +15,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
+import android.widget.SearchView;
 
 
 import com.softdesign.devintensive.R;
@@ -51,6 +53,9 @@ public class UserListActivity extends AppCompatActivity {
     private List<User> mUserSearch;
     private static Response<UserListRes> mUserListResCall;
     private static int sPositionItemUser;
+    private MenuItem mSearchItem;
+    private String mQuery;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,24 +110,14 @@ public class UserListActivity extends AppCompatActivity {
     }
     private void loadUsersFromDb() {
 
-        mUser = mDataManager.getUserListFromDb();
 
 
-        if (mUser.size() == 0) {
+
+        if (mDataManager.getUserListFromDb().size() == 0) {
             showSnackBar("Список пользователей не может быть загружен");
         } else {
 
-            mUserAdapter = new UserAdapter(mUser, new UserAdapter.CustomClickListener() {
-                @Override
-                public void onUserItemClickListener(int position) {
-
-                    UserDTO userDTO = new UserDTO(mUser.get(position));
-                    Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
-                    profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, userDTO);
-                    startActivity(profileIntent);
-                }
-            });
-            mRecyclerView.setAdapter(mUserAdapter);
+            showUsers(mDataManager.getUserListFromDb());
         }
     }
 
@@ -193,4 +188,47 @@ public class UserListActivity extends AppCompatActivity {
     public boolean onQueryTextChange(String s) {
         return false;
     }*/
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        mSearchItem = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
+        searchView.setQueryHint("Введите имя пользователя");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                showUsersByQuery(s);
+                return false;
+            }
+        });
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void showUsers(List<User> users){
+        mUser = users;
+        mUserAdapter = new UserAdapter(mUser, new UserAdapter.CustomClickListener() {
+            @Override
+            public void onUserItemClickListener(int position) {
+                UserDTO userDTO = new UserDTO(mUser.get(position));
+                Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
+                profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, userDTO);
+                startActivity(profileIntent);
+            }
+        });
+        mRecyclerView.swapAdapter(mUserAdapter, false);
+    }
+    private void showUsersByQuery(String query){
+        mQuery = query;
+
+        showUsers(mDataManager.getUserListByName(query));
+    }
 }
