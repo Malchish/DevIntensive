@@ -1,9 +1,14 @@
 package com.softdesign.devintensive.ui.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 ;
 import android.support.v4.view.MenuItemCompat;
@@ -16,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,6 +35,7 @@ import com.softdesign.devintensive.data.network.res.UserListRes;
 
 import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
+
 import com.softdesign.devintensive.ui.adapters.UserAdapter;
 import com.softdesign.devintensive.utils.ConstantManager;
 
@@ -40,14 +47,17 @@ import retrofit2.Response;
 
 
 
-public class UserListActivity extends AppCompatActivity {
+public class UserListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<User>> {
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "UserListActivity";
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
+
+
+
     private DrawerLayout mNavigationDrawer;
     private RecyclerView mRecyclerView;
-    private DataManager mDataManager;
+    private static DataManager mDataManager;
     private UserAdapter mUserAdapter;
     private List<User> mUser;
     private List<User> mUserSearch;
@@ -55,6 +65,8 @@ public class UserListActivity extends AppCompatActivity {
     private static int sPositionItemUser;
     private MenuItem mSearchItem;
     private String mQuery;
+    //private static DataManager mAsyncLoader;
+
 
 
     @Override
@@ -68,13 +80,14 @@ public class UserListActivity extends AppCompatActivity {
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
         mRecyclerView = (RecyclerView)findViewById(R.id.user_list);
+        //mAsyncLoader = mDataManager;
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         setUpToolBar();
         setUpDrawer();
-        loadUsersFromDb();
+        getSupportLoaderManager().initLoader(0, null, this);
 
 
     }
@@ -108,42 +121,57 @@ public class UserListActivity extends AppCompatActivity {
 
         //TODO: реализовать переход в другую активность при клике по элементу меню в NavigationDrawer
     }
-    private void loadUsersFromDb() {
 
 
+     //Загрузка списка пользователей из БД в асинхронном потоке
 
+    public static class UserListLoader extends AsyncTaskLoader<List<User>> {
 
-        if (mDataManager.getUserListFromDb().size() == 0) {
-            showSnackBar("Список пользователей не может быть загружен");
-        } else {
+        public UserListLoader(Context context) {
+            super(context);
 
-            showUsers(mDataManager.getUserListFromDb());
         }
+
+        @Override
+        public List<User> loadInBackground() {
+
+            Log.d(TAG, "Load in async thread");
+            return mDataManager.getUserListFromDb();
+
+        }
+
+    }
+
+    // Async Task
+
+    @Override
+    public Loader<List<User>> onCreateLoader(int id, Bundle args) {
+        return new UserListLoader(UserListActivity.this);
     }
 
 
-    private void loadUsersSearch(final List<User> users) {
-        mUserAdapter = new UserAdapter(users, new UserAdapter.CustomClickListener() {
-            @Override
-            public void onUserItemClickListener(int position) {
 
+    @Override
+    public void onLoadFinished(Loader<List<User>> loader, List<User> data) {
+        boolean dataOK = false;
 
-
-                sPositionItemUser = position;
-                UserDTO userProfile = new UserDTO(users.get(position));
-                Intent userIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
-                userIntent.putExtra(ConstantManager.PARCELABLE_KEY, userProfile);
-                startActivity(userIntent);
-                }
-        });
-        mRecyclerView.setAdapter(mUserAdapter);
-        if (sPositionItemUser != 0){
-           mRecyclerView.scrollToPosition(sPositionItemUser);
-            sPositionItemUser = 0;
+        if(data != null) {
+            if(data.size() > 0) {
+                dataOK = true;
             }
         }
 
+        if (dataOK) {
+            showUsers(data);
+        } else {
+            showSnackBar("Список пользователей не может быть загружен");
+        }
+    }
 
+    @Override
+    public void onLoaderReset(Loader<List<User>> loader) {
+        showUsers(new ArrayList<User>());
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
