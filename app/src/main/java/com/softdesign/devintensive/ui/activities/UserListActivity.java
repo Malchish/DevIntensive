@@ -3,6 +3,7 @@ package com.softdesign.devintensive.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 
@@ -29,6 +30,8 @@ import android.support.v7.app.ActionBar;
 import android.widget.SearchView;
 
 
+import com.redmadrobot.chronos.ChronosConnector;
+import com.redmadrobot.chronos.ChronosOperationResult;
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.network.res.UserListRes;
@@ -47,8 +50,9 @@ import retrofit2.Response;
 
 
 
-public class UserListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<User>> {
+public class UserListActivity extends AppCompatActivity  {
 
+    private ChronosConnector mConnector;
     private static final String TAG = ConstantManager.TAG_PREFIX + "UserListActivity";
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
@@ -57,7 +61,7 @@ public class UserListActivity extends AppCompatActivity implements LoaderManager
 
     private DrawerLayout mNavigationDrawer;
     private RecyclerView mRecyclerView;
-    private static DataManager mDataManager;
+    private DataManager mDataManager;
     private UserAdapter mUserAdapter;
     private List<User> mUser;
     private List<User> mUserSearch;
@@ -74,24 +78,54 @@ public class UserListActivity extends AppCompatActivity implements LoaderManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
+        mConnector = new ChronosConnector();
+        mConnector.onCreate(this, savedInstanceState);
 
         mDataManager = DataManager.getInstance();
         mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_coordinator_container);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
         mRecyclerView = (RecyclerView)findViewById(R.id.user_list);
-        //mAsyncLoader = mDataManager;
+
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         setUpToolBar();
         setUpDrawer();
-        getSupportLoaderManager().initLoader(0, null, this);
+
+        mConnector.runOperation(new MyChronosActivity(), TAG, true);
+
+
 
 
     }
 
+    @Override
+    protected void onResume() {
+        mConnector.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        mConnector.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onPause() {
+        mConnector.onPause();
+        super.onPause();
+    }
+
+   public void onOperationFinished(final MyChronosActivity.Result result) {
+       if (result.isSuccessful()) {
+           showUsers(result.getOutput());
+       } else {
+           showSnackBar("Список пользователей не может быть загружен");
+       }
+   }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -123,55 +157,6 @@ public class UserListActivity extends AppCompatActivity implements LoaderManager
     }
 
 
-     //Загрузка списка пользователей из БД в асинхронном потоке
-
-    public static class UserListLoader extends AsyncTaskLoader<List<User>> {
-
-        public UserListLoader(Context context) {
-            super(context);
-
-        }
-
-        @Override
-        public List<User> loadInBackground() {
-
-            Log.d(TAG, "Load in async thread");
-            return mDataManager.getUserListFromDb();
-
-        }
-
-    }
-
-    // Async Task
-
-    @Override
-    public Loader<List<User>> onCreateLoader(int id, Bundle args) {
-        return new UserListLoader(UserListActivity.this);
-    }
-
-
-
-    @Override
-    public void onLoadFinished(Loader<List<User>> loader, List<User> data) {
-        boolean dataOK = false;
-
-        if(data != null) {
-            if(data.size() > 0) {
-                dataOK = true;
-            }
-        }
-
-        if (dataOK) {
-            showUsers(data);
-        } else {
-            showSnackBar("Список пользователей не может быть загружен");
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<User>> loader) {
-        showUsers(new ArrayList<User>());
-    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
