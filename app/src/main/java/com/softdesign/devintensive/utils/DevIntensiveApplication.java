@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.facebook.stetho.Stetho;
+import com.softdesign.devintensive.data.managers.BusProvider;
 import com.softdesign.devintensive.data.storage.models.DaoMaster;
 import com.softdesign.devintensive.data.storage.models.DaoSession;
+import com.squareup.otto.Bus;
+import com.squareup.otto.ThreadEnforcer;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -20,7 +23,7 @@ public class DevIntensiveApplication extends Application {
     public static SharedPreferences sSharedPreferences;
     private static Context mContext;
     private static DaoSession sDaoSession;
-
+    public static Bus bus;
 
 
     @Override
@@ -36,6 +39,7 @@ public class DevIntensiveApplication extends Application {
 
         Stetho.initializeWithDefaults(this);
 
+        bus = BusProvider.getInstance();
 
     }
 
