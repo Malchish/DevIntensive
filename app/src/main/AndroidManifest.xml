@@ -44,13 +44,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
 
 
         <activity android:name=".ui.activities.MainActivity">
         </activity>
         <activity android:name=".ui.activities.UserListActivity">
+
+
+
         </activity>
         <activity android:name=".ui.activities.ProfileUserActivity">
             android:parentActivityName=".ui.activities.UserListActivity"

@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBar_layout"
+            android:id="@+id/appBar_layout_userList"
             android:theme="@style/AppTheme.AppBarOverlay"
             android:background="@color/grey"
             android:layout_width="match_parent"
@@ -29,8 +29,9 @@
 
             <android.support.v7.widget.Toolbar
 
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_userList"
                 android:layout_width="match_parent"
+                android:title="@string/team"
                 android:titleTextColor="@color/white"
                 android:layout_height="?attr/actionBarSize"
                 app:theme="@style/ToolBarStyle"

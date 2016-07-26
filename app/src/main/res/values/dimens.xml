@@ -56,4 +56,7 @@
     <dimen name="textSize_14">14dp</dimen>
     <dimen name="size_112">112dp</dimen>
 
+   <!-- dimens for swipe to delete feature-->
+
+    <dimen name="ic_clear_margin">16dp</dimen>
 </resources>
