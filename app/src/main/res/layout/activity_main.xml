@@ -16,15 +16,17 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar_layout"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@color/color_primary"
+        android:background="@color/grey"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/color_primary"
+            app:contentScrim="@color/grey"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
@@ -104,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="5"
-                    android:textSize="@dimen/card_left_and_right_padding_24"
+                    android:textSize="@dimen/textSize_20"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-condensed"
                     />
@@ -114,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="Рейтинг"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/textSize_14"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-condensed"/>
             </LinearLayout>
@@ -137,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="5"
-                    android:textSize="@dimen/card_left_and_right_padding_24"
+                    android:textSize="@dimen/textSize_20"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-condensed"/>
 
@@ -146,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="Написано строк кода"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/textSize_14"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-condensed"/>
             </LinearLayout>
@@ -167,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="5"
-                    android:textSize="@dimen/card_left_and_right_padding_24"
+                    android:textSize="@dimen/textSize_20"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-condensed"/>
 
@@ -176,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="Проектов"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/textSize_14"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-condensed"/>
             </LinearLayout>

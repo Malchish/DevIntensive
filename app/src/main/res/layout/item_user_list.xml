@@ -52,6 +52,7 @@
         </FrameLayout>
 
             <LinearLayout
+
                 android:id="@+id/info_panel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/content_left_margin_from_screen_edge_72"
