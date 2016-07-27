@@ -15,17 +15,18 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar_layout"
-        android:layout_marginTop="@dimen/card_left_and_right_padding_24"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@color/color_primary"
+        android:background="@color/grey"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/color_primary"
+            app:contentScrim="@color/grey"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
@@ -37,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/profile_image_size_256"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/arnold"/>
+                    android:src="@drawable/arni"/>
                 <RelativeLayout
                     android:id="@+id/place_holder"
                     android:layout_width="match_parent"
@@ -80,8 +81,113 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/users_profil_content"/>
 
-<include layout="@layout/users_profil_content"/>
+    <LinearLayout
+
+        android:id="@+id/user_info_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:background="@color/grey"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:behavior_min_height="56dp"
+        app:layout_behavior=".ui.behaviors.UserInfoBehavior">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/num_rating_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="5"
+                    android:textSize="@dimen/textSize_20"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"
+                    />
+
+                <TextView
+                    android:id="@+id/reiting_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Рейтинг"
+                    android:textSize="@dimen/textSize_14"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="72dp"
+                android:background="@color/grey_light">
+                </View>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/num_code_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="5"
+                    android:textSize="@dimen/textSize_20"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+
+                <TextView
+                    android:id="@+id/code_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Написано строк кода"
+                    android:textSize="@dimen/textSize_14"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+            </LinearLayout>
+            <View
+                android:layout_width="2dp"
+                android:layout_height="72dp"
+                android:background="@color/grey_light">
+                </View>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/num_proj_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="5"
+                    android:textSize="@dimen/textSize_20"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+
+                <TextView
+                    android:id="@+id/projects_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Проектов"
+                    android:textSize="@dimen/textSize_14"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"/>
+            </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_button"

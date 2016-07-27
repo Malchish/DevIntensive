@@ -3,7 +3,6 @@ package com.softdesign.devintensive.ui.activities;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.softdesign.devintensive.ui.adapters.RepositoriesAdapter;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Picasso;
 
-import java.security.PrivateKey;
 import java.util.List;
 
 public class ProfileUserActivity extends BaseActivity {

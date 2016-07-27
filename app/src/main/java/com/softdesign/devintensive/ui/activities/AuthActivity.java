@@ -4,21 +4,27 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
+import com.softdesign.devintensive.data.managers.BusProvider;
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.network.req.UserLoginReq;
+import com.softdesign.devintensive.data.network.res.UserListRes;
 import com.softdesign.devintensive.data.network.res.UserModelRes;
+import com.softdesign.devintensive.data.storage.models.Repository;
+import com.softdesign.devintensive.data.storage.models.RepositoryDao;
+import com.softdesign.devintensive.data.storage.models.User;
+import com.softdesign.devintensive.data.storage.models.UserDao;
 import com.softdesign.devintensive.utils.NetworkStatusCheker;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,14 +39,22 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     private EditText mLogin, mPassward;
     private CoordinatorLayout mCoordinatorLayout;
     private DataManager mDatamanager;
+    private RepositoryDao mRepositoryDao;
+    private UserDao mUserDao;
+    public static Bus bus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
+        bus = BusProvider.getInstance();
+
 
         mDatamanager = DataManager.getInstance();
+
+        mUserDao = mDatamanager.getDaoSession().getUserDao();
+        mRepositoryDao = mDatamanager.getDaoSession().getRepositoryDao();
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
         mRememberPassward = (TextView)findViewById(R.id.remember_txt);
@@ -51,6 +65,14 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
         mSignIn.setOnClickListener(this);
         mRememberPassward.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
     }
 
     @Override
@@ -80,13 +102,20 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         mDatamanager.getPreferencesManager().saveUserId(userModelRes.getData().getUser().getId());
         showSnackBar(userModelRes.getData().getToken());
 
-        Intent loginIntent = new Intent(this, MainActivity.class);
-        startActivity(loginIntent);
+        Intent splashIntent = new Intent(this, SplashScreenActivity.class);
+        startActivity(splashIntent);
+
+
 
         saveUserValues(userModelRes);
         saveUserFields(userModelRes);
         saveUserNames(userModelRes);
         saveUserPhotoAvatar(userModelRes);
+
+
+        saveUserInDb();
+
+
     }
     private void singIn() {
 
@@ -97,7 +126,9 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<UserModelRes> call, Response<UserModelRes> response) {
                     if (response.code() == 200) {
+
                         loginSuccess(response.body());
+
                     } else if (response.code() == 404) {
                         showSnackBar("Неверный логин или пароль");
                     } else {
@@ -135,6 +166,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                 userModel.getData().getUser().getProfileValues().getProjects(),
         };
         mDatamanager.getPreferencesManager().saveUserProfileValues(userValues);
+
     }
     private void saveUserFields(UserModelRes userModel){
         String[] userFields = {
@@ -159,4 +191,56 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         mDatamanager.getPreferencesManager().saveUserAvatar(avatar);
     }
 
+    /* загрузка пользователей в базу данных из сети */
+
+    private void saveUserInDb(){
+        Call<UserListRes> call = mDatamanager.getUserListFromNetwork();
+        call.enqueue(new Callback<UserListRes>() {
+
+            @Override
+            public void onResponse(Call<UserListRes> call, Response<UserListRes> response) {
+                try {
+                    if (response.code() == 200){
+                        List<Repository> allRepositories = new ArrayList<Repository>();
+                        List<User> allUsers = new ArrayList<User>();
+
+                        for (UserListRes.UserData userRes : response.body().getData()){
+                            allRepositories.addAll(getRepoListFromUserRes(userRes));
+                            allUsers.add(new User(userRes));
+                        }
+
+                        mRepositoryDao.insertOrReplaceInTx(allRepositories);
+                        mUserDao.insertOrReplaceInTx(allUsers);
+
+                    }else {
+                        showSnackBar("Список пользователей не может быть получен");
+                        Log.e(TAG, "onResponse: " + String.valueOf(response.errorBody()));
+                    }
+
+               }catch (NullPointerException e){
+                    e.printStackTrace();
+                    showSnackBar("Something goes wrong");
+                }
+                bus.post("");
+
+            }
+
+            @Override
+            public void onFailure(Call<UserListRes> call, Throwable t) {
+                showSnackBar("Smth goes wrong");
+            }
+        });
+
+
+    }
+    private List<Repository> getRepoListFromUserRes(UserListRes.UserData userData){
+        final String userId = userData.getId();
+
+        List<Repository> repositories = new ArrayList<>();
+
+        for (UserModelRes.Repo repositoryRes : userData.getRepositories().getRepo()){
+            repositories.add(new Repository(repositoryRes, userId));
+        }
+        return repositories;
+    }
 }

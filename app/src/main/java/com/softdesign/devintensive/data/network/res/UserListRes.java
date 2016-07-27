@@ -2,6 +2,7 @@ package com.softdesign.devintensive.data.network.res;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.softdesign.devintensive.data.storage.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +17,13 @@ public class UserListRes {
         private boolean success;
         @SerializedName("data")
         @Expose
-        private List<UserData> data = new ArrayList<UserData>();
+        private List<UserData> data = new ArrayList<>();
 
         public List<UserData> getData() {
             return data;
         }
 
-        public class UserData {
+        public class UserData{
 
         @SerializedName("_id")
         @Expose
@@ -61,14 +62,24 @@ public class UserListRes {
                 return profileValues;
             }
 
-            public UserModelRes.Repositories getRepositories() {
-                return repositories;
-            }
+           /* public List<Repository> getRepositories() {
+                return (List<Repository>) repositories;
+            }*/
 
             public UserModelRes.PublicInfo getPublicInfo() {
                 return publicInfo;
             }
+
+            public String getId() {
+                return id;
+            }
+
+
+            public UserModelRes.Repositories getRepositories() {
+                return repositories;
+            }
         }
+
 }
 
 

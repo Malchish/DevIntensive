@@ -39,9 +39,21 @@
                 android:paddingRight="@dimen/horizontal_margins_on_mobile_16"
                 android:paddingBottom="@dimen/size_small_24"
                 android:layout_gravity="bottom"/>
+
+            <Button
+                android:id="@+id/undo_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_undo"
+                android:textColor="@android:color/darker_gray"
+                android:layout_gravity="end|bottom"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                />
         </FrameLayout>
 
             <LinearLayout
+
+                android:id="@+id/info_panel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/content_left_margin_from_screen_edge_72"
                 android:orientation="horizontal"
@@ -129,6 +141,7 @@
             android:fontFamily="sans-serif-condensed"
             android:textSize="@dimen/textSize_14"/>
         <View
+            android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grey_light"

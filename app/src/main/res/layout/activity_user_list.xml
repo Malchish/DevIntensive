@@ -16,10 +16,9 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBar_layout"
-            android:layout_marginTop="@dimen/card_left_and_right_padding_24"
+            android:id="@+id/appBar_layout_userList"
             android:theme="@style/AppTheme.AppBarOverlay"
-            android:background="@color/color_primary"
+            android:background="@color/grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -27,14 +26,19 @@
 
 
 
+
             <android.support.v7.widget.Toolbar
 
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_userList"
                 android:layout_width="match_parent"
+                android:title="@string/team"
                 android:titleTextColor="@color/white"
                 android:layout_height="?attr/actionBarSize"
                 app:theme="@style/ToolBarStyle"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+
+
 
         </android.support.design.widget.AppBarLayout>
 

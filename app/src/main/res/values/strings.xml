@@ -9,5 +9,9 @@
     <string name="choose_photo">Выберите фото</string>
     <string name="enter">ВОЙТИ</string>
     <string name="textSize_14">14dp</string>
+    <string name="hint_search">Поиск пользователя</string>
+    <string name="button_undo">Отменить удаление</string>
+    <string name="menu_checkbox_undo">Отменить удаление</string>
+    <string name="team">Команда</string>
 
 </resources>

@@ -29,13 +29,9 @@
         android:layout_width="240dp"
         android:layout_gravity="center"
         app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="2dp"
         app:cardElevation="8dp">
-    <!--<LinearLayout
-        android:id="@+id/all"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/login_bg">-->
+
 
 
         <LinearLayout
@@ -105,18 +101,31 @@
                     android:inputType="textPassword"
                     android:textColorHint="@color/grey"/>
             </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_height="match_parent"
+        android:layout_width="126dp"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/color_accent"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="4dp"
+        android:layout_marginTop="@dimen/horizontal_margins_on_mobile_16">
             <Button
                 android:id="@+id/login_btn"
                 style="@style/AppTheme.Button.Red"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/horizontal_margins_on_mobile_16"
                 android:minWidth="126dp"
                 android:background="@color/color_accent"
                 android:text="Войти"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
                 android:textAllCaps="true"
                 android:theme="@style/AppTheme.Button.Red"/>
+    </android.support.v7.widget.CardView>
+
 
             <TextView
                 android:id="@+id/remember_txt"
