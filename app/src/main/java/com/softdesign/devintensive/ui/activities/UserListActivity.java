@@ -3,6 +3,7 @@ package com.softdesign.devintensive.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -43,6 +45,8 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.redmadrobot.chronos.ChronosConnector;
 import com.redmadrobot.chronos.ChronosOperationResult;
 import com.softdesign.devintensive.R;
@@ -53,7 +57,10 @@ import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
 
 import com.softdesign.devintensive.ui.adapters.UserAdapter;
+import com.softdesign.devintensive.ui.listeners.OnCustomerListChangedListener;
+import com.softdesign.devintensive.ui.listeners.OnStartDragListener;
 import com.softdesign.devintensive.utils.ConstantManager;
+import com.softdesign.devintensive.utils.SharedPreferencesTools;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -71,7 +78,8 @@ public class UserListActivity extends AppCompatActivity {
     private static final String TAG = ConstantManager.TAG_PREFIX + "UserListActivity";
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
-
+    private ItemTouchHelper.SimpleCallback simpleItemTouchCallback;
+    private ItemTouchHelper mItemTouchHelper;
 
     private DrawerLayout mNavigationDrawer;
     private RecyclerView mRecyclerView;
@@ -86,6 +94,8 @@ public class UserListActivity extends AppCompatActivity {
     private AppBarLayout mAppBarLayout;
     private ImageView mUserAvatar;
     private NavigationView mNavigationView;
+    private List<User> AllItems;
+
 
     //private static DataManager mAsyncLoader;
 
@@ -108,12 +118,17 @@ public class UserListActivity extends AppCompatActivity {
         mUserAvatar = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+       // getAllItemList();
+
+
 /*-------------------------------------------------------------------*/
         setUpItemTouchHelper();
         setUpAnimationDecoratorHelper();
 /*-------------------------------------------------------------------*/
         setUpToolBar();
         setUpDrawer();
+
 
         mConnector.runOperation(new MyChronosActivity(), TAG, true);
 
@@ -136,6 +151,11 @@ public class UserListActivity extends AppCompatActivity {
                 });
     }
 
+    private List<User> getAllItemList() {
+        List<User> AllItems = SharedPreferencesTools.getOrderedItems(this);
+        return AllItems;
+    }
+
     @Override
     protected void onResume() {
         mConnector.onResume();
@@ -152,6 +172,12 @@ public class UserListActivity extends AppCompatActivity {
     protected void onPause() {
         mConnector.onPause();
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferencesTools.setOrderedItems(this, AllItems);
     }
 
     public void onOperationFinished(final MyChronosActivity.Result result) {
@@ -265,7 +291,10 @@ public class UserListActivity extends AppCompatActivity {
 
     private void setUpItemTouchHelper() {
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+
+
 
             // we want to cache these and not allocate anything repeatedly in the onChildDraw method
             Drawable background;
@@ -279,7 +308,9 @@ public class UserListActivity extends AppCompatActivity {
             // not important, we don't want drag & drop
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
+                mUserAdapter.onItemMove(viewHolder.getAdapterPosition(),
+                target.getAdapterPosition());
+                return true;
             }
 
             @Override
@@ -299,6 +330,23 @@ public class UserListActivity extends AppCompatActivity {
                 UserAdapter adapter = (UserAdapter) mRecyclerView.getAdapter();
 
                     adapter.pendingRemoval(swipedPosition);
+            }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+                int swipeFlags = ItemTouchHelper.END | ItemTouchHelper.START;
+                return makeMovementFlags(dragFlags, swipeFlags);
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return true;
+            }
+
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+                return true;
             }
 
             @Override
@@ -323,8 +371,10 @@ public class UserListActivity extends AppCompatActivity {
             }
 
         };
-        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+
     }
 
     /**
@@ -410,4 +460,6 @@ public class UserListActivity extends AppCompatActivity {
 
         });
     }
+
+
 }

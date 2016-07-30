@@ -20,6 +20,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import android.os.Handler;
@@ -27,7 +28,7 @@ import android.os.Handler;
 /**
  * Created by alena on 15.07.16.
  */
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> implements ItemTouchHelperAdapter{
 
     /* fields for swipe to remove feature*/
     private static final int PENDING_REMOVAL_TIMEOUT = 3000;
@@ -41,6 +42,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private List<User> mUsers;
     private CustomClickListener mCustomClickListener;
     private View infoPanel;
+    //private User mUser;
 
     public UserAdapter(List<User> users, CustomClickListener customClickListener) {
         mUsers = users;
@@ -162,10 +164,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     }
 
-    @Override
-    public int getItemCount() {
-        return mUsers.size();
-    }
+
+
+
     public static class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 /* -------------------------------------------*/
         Button undoButton;
@@ -237,6 +238,30 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             mUsers.remove(position);
             notifyItemRemoved(position);
         }
+    }
+    @Override
+    public void onItemDismiss(int position) {
+        mUsers.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mUsers.size();
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mUsers, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mUsers, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
     }
 
     public boolean isPendingRemoval(int position) {
